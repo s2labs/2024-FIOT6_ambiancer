@@ -1,0 +1,7 @@
+torch~=2.4.1+cu124
+pillow~=10.4.0
+torchvision~=0.19.1+cu124
+paho-mqtt~=2.1.0
+opencv-python~=4.10.0.84
+numpy~=1.26.4
+# deepface~=0.0.93
