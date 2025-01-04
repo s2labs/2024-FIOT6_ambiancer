@@ -1,0 +1,13 @@
+INSTALL:
+sudo apt install -y mosquitto mosquitto-clients
+sudo systemctl enable mosquitto.service
+
+CONFIGURE
+sudo nano /etc/mosquitto/mosquitto.conf
+add lines:
+listener 1883
+allow_anonymous true
+
+sudo systemctl start mosquitto.service
+
+pip install paho-mqtt

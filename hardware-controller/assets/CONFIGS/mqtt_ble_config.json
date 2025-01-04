@@ -1,0 +1,7 @@
+{
+    "BLE_ADDRESS": "ff:21:09:28:22:5a",
+    "CHARACTERISTIC": "0000fff3-0000-1000-8000-00805f9b34fb",
+    "MQTT_LISTEN_TOPIC": "cmnd/ble",
+    "MQTT_HOST": "127.0.0.1",
+    "MQTT_PORT": "1883"
+}

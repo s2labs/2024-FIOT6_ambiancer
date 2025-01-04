@@ -1,0 +1,6 @@
+{
+    "MQTT_LISTEN_TOPIC": "cmnd/IRcommand",
+    "MQTT_PUBLISH_TOPIC": "cmnd/tasmota_23DFCF/IRsend", 
+    "MQTT_HOST": "127.0.0.1",
+    "MQTT_PORT": "1883"
+}
