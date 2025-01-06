@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Control</title>
+    <!-- Load Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='/bootstrap-5.3.3-dist/css/bootstrap.min.css') }}">
+    <style>
+        body {
+            background-image: url({{ url_for('static', filename='background2.jpg') }});
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+               background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            background-color: #ffffff;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border-bottom: none;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-control {
+            border-radius: 4px;
+        }
+        #error-msg {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">MQTT Control Panel</h1>
+
+    <!-- Timer Card -->
+    <div class="card">
+        <div class="card-header">
+            Set Timer
+        </div>
+        <div class="card-body text-center">
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" id="timeInput" placeholder="00:00" >
+                <button onclick="sendMessage('fiot/iot/time')" class="btn btn-primary" type="button" id="submit-timer">Apply</button>
+            </div>
+            <p id="error-msg" style="color:red; display:none;">Invalid format. Please use mm:ss (seconds between 0 and 59).</p>
+        </div>
+    </div>
+
+    <!-- Action Selection Card -->
+    <div class="card">
+        <div class="card-header">
+            Set an Action
+        </div>
+        <div class="card-body text-center">
+            <div class="input-group">
+                <select id="action-dropdown" class="form-select" aria-label="Default select example">
+                    <option selected>Set an action</option>
+                    <option value="time-over" class="show">Time is over</option>
+                    <option value="faster" class="show">Faster</option>
+                    <option value="slower" class="show">Slower</option>
+                    <option value="sad" class="mood">Sad</option>
+                    <option value="happy" class="mood">Happy</option>
+                    <option value="neutral" class="mood">Neutral</option>
+                    <option value="angry" class="mood">Anger</option>
+                    <option value="disgust" class="mood">Disgust</option>
+                    <option value="fear" class="mood">Fear</option>
+                    <option value="surprise" class="mood">Surprise</option>
+                </select>
+                <button onclick="sendMessage('fiot/iot/mood')" class="btn btn-primary" type="button" id="submit-action">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS -->
+<script src="{{ url_for('static',filename='/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
+<script>
+    // JavaScript function to handle form submission
+    function sendMessage(topic) {
+        let payload;
+        if (topic === 'fiot/iot/mood') {
+            payload = document.getElementById('action-dropdown').value;
+        } else {
+            payload = document.getElementById('timeInput').value;
+        }
+
+        fetch('/publish', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ topic, payload }),
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    }
+
+    const timeInput = document.getElementById('timeInput');
+    const errorMsg = document.getElementById('error-msg');
+
+    // Listen for input changes
+    timeInput.addEventListener('input', function (e) {
+        const value = e.target.value;
+
+        // Only allow numbers and colon, remove invalid characters
+        let sanitizedValue = value.replace(/[^0-9:]/g, '');
+
+        // If there's more than one colon, keep only the first
+        if (sanitizedValue.indexOf(':') !== -1) {
+            sanitizedValue = sanitizedValue.slice(0, sanitizedValue.indexOf(':') + 1) +
+                sanitizedValue.slice(sanitizedValue.indexOf(':') + 1).replace(/:/g, '');
+        }
+
+        // Format to mm:ss if user hasn't added colon
+        const parts = sanitizedValue.split(':');
+
+        // Automatically add leading zeros for mm and ss parts if needed
+        if (parts.length === 2) {
+            let minutes = parts[0].padStart(2, '0');
+            let seconds = parts[1].padStart(2, '0');
+
+            // Ensure seconds are between 0 and 59
+            if (parseInt(seconds) > 59) {
+                seconds = '59';
+                errorMsg.style.display = 'block'; // Show error message if seconds > 59
+            } else {
+                errorMsg.style.display = 'none'; // Hide error message
+            }
+
+            e.target.value = `${minutes}:${seconds}`;
+        } else if (parts.length === 1 && parts[0].length > 2) {
+            // Automatically insert a colon when user types more than 2 digits
+            e.target.value = `${parts[0].slice(0, 2)}:${parts[0].slice(2, 4)}`;
+        } else {
+            e.target.value = sanitizedValue;
+        }
+    });
+</script>
+
+</body>
+</html>

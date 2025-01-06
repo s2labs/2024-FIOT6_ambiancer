@@ -1,0 +1,86 @@
+/* general styling */
+:root {
+  --smaller: .75;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, p {
+  height: 100%;
+  margin: 0;
+position: fixed;
+    top: 50%;
+    left: 50%;
+transform: translate(-50%, -50%);
+
+}
+
+username{
+ align-items: center;
+  padding: 10;
+}
+
+button {
+  width: 240px;
+  height: 40px;
+  cursor: pointer;
+  border: 0px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+  font-size: 15px
+}
+
+container-button-timestamp{
+  padding: 10;
+}
+
+container-button-basic{
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: normal;
+  letter-spacing: .125rem;
+  text-transform: uppercase;
+}
+
+body {
+  align-items: center;
+  background-color: #F20000;
+  display: flex;
+  font-family: -apple-system, 
+    BlinkMacSystemFont, 
+    "Segoe UI", 
+    Roboto, 
+    Oxygen-Sans, 
+    Ubuntu, 
+    Cantarell, 
+    "Helvetica Neue", 
+    sans-serif;
+}
+
+.container {
+  color: #333;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: normal;
+  letter-spacing: .125rem;
+  text-transform: uppercase;
+
+}
+
+@media all and (max-width: 768px) {
+  h1 {
+    font-size: calc(1.5rem * var(--smaller));
+  }
+}
+

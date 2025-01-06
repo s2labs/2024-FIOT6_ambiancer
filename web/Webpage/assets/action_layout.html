@@ -1,0 +1,110 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Control</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="./script.js"></script>
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+
+      .card.booking-card.v-2 {
+        background-color: #c7f2e3;
+      }
+
+      .card.booking-card.v-2 .fa {
+        color: #f7aa00;
+      }
+
+      .card.booking-card.v-2 .card-body .card-text {
+        color: #db2d43;
+      }
+
+      .card.booking-card.v-2 .chip {
+        background-color: #87e5da;
+      }
+
+      .card.booking-card.v-2 .card-body hr {
+        border-top: 1px solid #f7aa00;
+      }
+
+      .card {
+      padding:15px
+      }
+
+
+      .bi::before {
+        display: inline-block;
+        content: "";
+        vertical-align: -.125em;
+        background-image: url("data:image/svg+xml,<svg viewBox='0 0 16 16' fill='%23333' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' clip-rule='evenodd'/></svg>");
+        background-repeat: no-repeat;
+        background-size: 1rem 1rem;
+      }
+      .tone-emo {
+      display:inline-block;
+       margin:20px
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="app-container" class="container mt-5">
+      <h1 class="text-center mb-4">Control Panel</h1>
+
+      <!-- Row to display two cards next to each other -->
+      <div class="row">
+        <!-- First Card -->
+        <div class="card booking-card v-2 mt-2 mb-4 rounded-bottom text-center" style="display:inline-block">
+        <div style="display:inline-block;text-align:left">
+            <i class="bi-alarm" style="font-size: 2rem; color: cornflowerblue;display:inline-block;"></i>
+            <p style="display:inline-block"> Set Timer:</p>
+        </div>
+
+        <!-- Use input-group to concatenate input and button -->
+        <div class="input-group mb-2;display:inline-block">
+          <input type="text" class="form-control" id="timer-input" placeholder="Enter time" aria-label="Enter action">
+          <button class="btn btn-primary" type="button" id="submit-timer">Apply</button>
+        </div>
+      </div>
+      </div>
+
+
+    <div class="row">
+      <div class="card booking-card v-2 mt-2 mb-4 rounded-bottom text-center">
+        <i class="bi-alarm" style="font-size: 2rem; color: cornflowerblue;"></i>
+        <p> Set an Action:</p>
+
+        <!-- Use input-group to concatenate input and button -->
+        <div class="input-group mb-2">
+          <select id="action-dropdown" class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">Time is over</option>
+            <option value="2">Faster</option>
+            <option value="2">Slower</option>
+            <option value="2">Sad</option>
+            <option value="2">Happy</option>
+            <option value="2">Neutral</option>
+          </select>
+          <button class="btn btn-primary" type="button" id="submit-action">Apply</button>
+        </div>
+      </div>
+    </div>
+
+       {%app_entry%} - Dash content will be injected here
+    </div>
+
+    <footer class="mt-4 text-center">
+       Optional footer content like config or scripts
+       {%config%}
+       {%scripts%}
+       {%renderer%}
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-GbGV5dFGpQHTNqxOTu+aZwTtRGRZdHdLTnJ7ze3G9zDdOd+P7XtAMk7v8WbNT2HQ" crossorigin="anonymous"></script>
+  </body>
+  </html>
